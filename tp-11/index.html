@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Editor de Texto - DOM y JavaScript</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container my-1 my-sm-2 my-md-4 my-lg-5">
+      <h1>Editor de Texto</h1>
+      <div class="card">
+        <div class="card-body">
+          <h2>Texto</h2>
+
+          <p class="texto" id="texto">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            elementum auctor libero, vel imperdiet est. Etiam blandit facilisis
+            ex, nec cursus metus pharetra quis. Fusce imperdiet nisl nibh, ac
+            aliquet ante elementum vitae.
+          </p>
+
+          <input
+            type="text"
+            id="input-texto"
+            class="form-control my-3 border-primary"
+            placeholder="Edita el texto aquí"
+          />
+
+          <div class="col-12 col-md-4 my-1">
+            <select id="selector-tamaño" class="form-select">
+              <option value="16">Tamaño normal</option>
+              <option value="20">Grande</option>
+              <option value="24">Muy grande</option>
+              <option value="30">Enorme</option>
+            </select>
+          </div>
+
+          <hr class="hr" />
+
+          <h2>Opciones de Formato</h2>
+          <div class="row">
+            <div class="col-12 col-md-4 my-1">
+              <button
+                id="btn-negrita"
+                class="btn d-block w-100 btn-primary"
+                data-formato="negrita"
+              >
+                Bold (Negrita)
+              </button>
+            </div>
+            <div class="col-12 col-md-4 my-1">
+              <button
+                id="btn-cursiva"
+                class="btn d-block w-100 btn-primary"
+                data-formato="cursiva"
+              >
+                Italic (Cursiva)
+              </button>
+            </div>
+            <div class="col-12 col-md-4 my-1">
+              <button
+                id="btn-subrayado"
+                class="btn d-block w-100 btn-primary"
+                data-formato="subrayado"
+              >
+                Underline (Subrayado)
+              </button>
+            </div>
+            <div class="col-12 col-md-4 my-1">
+              <button
+                id="btn-color"
+                class="btn d-block w-100 btn-primary"
+                data-formato="color"
+              >
+                color (rojo)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript">
+      /**
+       * funcionNegrita()
+       * Esta función se ejecuta cuando el usuario selecciona la opción Bold (negrita).
+       */
+      function funcionNegrita() {
+        const text = document.getElementById("texto");
+        text.style.fontWeight = "bold";
+        const btnestado = document.getElementById("btn-negrita");
+        btnestado.style.textDecoration = "underline";
+        btnestado.style.color = "grey";
+      }
+
+      const boton = document
+        .getElementById("btn-negrita")
+        .addEventListener("click", funcionNegrita);
+
+      /**
+       * funcionCursiva()
+       * Esta función se ejecuta cuando el usuario selecciona la opción Italic (cursiva).
+       */
+      function funcionCursiva() {
+        const text = document.getElementById("texto");
+        text.style.fontStyle = "italic";
+        const btnestado = document.getElementById("btn-cursiva");
+        btnestado.style.textDecoration = "underline";
+        btnestado.style.color = "grey";
+      }
+
+      const boton1 = document
+        .getElementById("btn-cursiva")
+        .addEventListener("click", funcionCursiva);
+
+      /**
+       * funcionSubrayado()
+       * Esta función se ejecuta cuando el usuario selecciona la opción Underline (subrayado).
+       */
+      function funcionSubrayado() {
+        const text = document.getElementById("texto");
+        text.style.textDecoration = "underline";
+        const btnestado = document.getElementById("btn-subrayado");
+        btnestado.style.textDecoration = "underline";
+        btnestado.style.color = "grey";
+      }
+
+      const boton2 = document
+        .getElementById("btn-subrayado")
+        .addEventListener("click", funcionSubrayado);
+
+      function funcioncolor() {
+        const text = document.getElementById("texto");
+        text.style.color = "red";
+        const btnestado = document.getElementById("btn-color");
+        btnestado.style.textDecoration = "underline";
+        btnestado.style.color = "grey";
+      }
+
+      const boton3 = document
+        .getElementById("btn-color")
+        .addEventListener("click", funcioncolor);
+
+      function ResetearEstilosTexto() {
+        const texto = document.getElementById("texto");
+        texto.style.fontWeight = "normal";
+        texto.style.fontStyle = "normal";
+        texto.style.textDecoration = "none";
+        texto.style.color = "black";
+      }
+
+      function ResetearEstilosBotones() {
+        document.querySelectorAll("button.btn").forEach((btn) => {
+          btn.style.textDecoration = "none";
+          btn.style.color = "";
+        });
+      }
+
+      function handlerBoton(e) {
+        // Obtiene el valor del atributo "data-formato" del botón que disparó el evento
+        const funcionBoton = e.target.dataset.formato;
+
+        /* resetea el estilo del texto y de los botones cuando se usea otro nuevo */
+        ResetearEstilosTexto();
+        ResetearEstilosBotones();
+
+        switch (funcionBoton) {
+          case "negrita":
+            funcionNegrita();
+            break;
+          case "cursiva":
+            funcionCursiva();
+            break;
+          case "subrayado":
+            funcionSubrayado();
+            break;
+          case "color":
+            funcioncolor();
+            break;
+        }
+      }
+      document
+        .querySelectorAll("button.btn")
+        .forEach((e) => e.addEventListener("click", handlerBoton));
+
+      /* editar texto */
+      const inputTexto = document.getElementById("input-texto");
+      const parrafoTexto = document.getElementById("texto");
+      inputTexto.value = parrafoTexto.textContent;
+
+      inputTexto.addEventListener("input", () => {
+        parrafoTexto.textContent = inputTexto.value;
+      });
+
+      /* tamaño de fuente */
+      const selectorTamaño = document.getElementById("selector-tamaño");
+      selectorTamaño.addEventListener("change", function () {
+        const texto = document.getElementById("texto");
+        texto.style.fontSize = selectorTamaño.value + "px";
+      });
+    </script>
+  </body>
+</html>
